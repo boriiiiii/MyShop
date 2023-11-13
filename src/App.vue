@@ -1,8 +1,3 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
@@ -13,35 +8,32 @@ import TheWelcome from './components/TheWelcome.vue'
   </header>
 
   <main>
-    <TheWelcome />
+      <h2>Données de l'API:</h2>
+      <pre>{{ apiData }}</pre>
   </main>
 </template>
 
+<script setup>
+import HelloWorld from './components/HelloWorld.vue';
+
+let apiData = null;
+let loading = true;
+
+fetch('http://localhost/api/categories', {
+  headers: {
+    'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2OTk5MDA2MjcsImV4cCI6MTY5OTkwNDIyNywicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImJvcmlzLmRvdWFkeUBlcGl0ZWNoLmRpZ2l0YWwifQ.eMNNjg_Mkk1SBIr5KH7y9S4kU7MuBMnXAXBr4plNrvk-CXebrB0_dDgN9MmUcTRBASla-jyX_z91R_EasmDI0IIXhS0pvkyJjSzGMmKJDaHED2GW0hNMzPVzBkrd_d2smz_iq51dAv3LSzuAoUjNZct6q7j4YS_7WEJFmxxAVslw4uLpcBAYgOpSQombNHosF2xnbbbvV0m52y6aPQG18DGLXP0bcRBZ6G-qkY7z3AEN6JdE21M7ezpRaLFOmZzlnv0BHY_Q_bmyqE3HQjbfP-XthQPVKwKd8PK94fHlIoMeF1fT-D0_LfYWTaZV-Uz1QTbd3y1RCuWi4MVqTH47Zg'
+  }
+})
+    .then(response => response.json())
+    .then(data => {
+      apiData = data;
+    })
+    .catch(error => console.error('Erreur:', error))
+    .finally(() => {
+      loading = false;
+    });
+</script>
+
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
+/* Styles here */
 </style>
