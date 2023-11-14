@@ -5,14 +5,15 @@
 
   <main>
     <h2>Données de l'API:</h2>
-    <p>
-      <!-- {{ apiData['hydra:member'] }} -->
-
-      id : {{ apiData['hydra:member'][0]['id'] }}
-      type : {{ apiData['hydra:member'][0]['@type'] }}
-      name : {{ apiData['hydra:member'][0]['name'] }}
-      product's list : {{ apiData['hydra:member'][0]['products'] }}
-    </p>
+    <div v-if="apiData && apiData['hydra:member']">
+      <div v-for="category in apiData['hydra:member']" :key="category['@id']">
+        <h3>Category {{ category['id'] }}</h3>
+        <p>ID: {{ category['id'] }}</p>
+        <p>Type: {{ category['@type'] }}</p>
+        <p>Name: {{ category['name'] }}</p>
+        <p>Product's List: {{ category['products'] }}</p>
+      </div>
+    </div>
   </main>
 </template>
 
