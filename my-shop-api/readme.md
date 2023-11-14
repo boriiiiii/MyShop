@@ -16,8 +16,10 @@
 ## Manage Server
 
 Here is the two commands to start and stop your docker environment:
-
-- *docker-compose up -d* -> run docker containers
-- *docker-compose down* -> stop docker containers
-
+```sh
+docker-compose up -d
+```
+```sh
+docker-compose down
+```
 From there you can find the documentation to the API at the following url: *http://localhost/api/docs*
