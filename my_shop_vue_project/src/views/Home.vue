@@ -1,6 +1,8 @@
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="../assets/logo.svg" width="125" height="125" />
+    <input type="text" size="70">
+    <button @click="redirectToLogin">Login</button>
   </header>
 
   <main>
@@ -37,6 +39,17 @@ function getApiData(apiURL){
         loading = false;
       });
 }
-
+function redirectToLogin() {
+  // Assuming you want to redirect to http://localhost:5173/login
+  window.location.href = 'http://localhost:5173/login';
+}
 
 </script>
+
+<style>
+header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+</style>

@@ -1,20 +1,23 @@
-<script setup>
+<script >
 
 </script>
 
 <template>
-  <h1>LOG IN</h1>
-  <section id = "login_stuff">
-    <section id="login_info">
+
+  <h1>REGISTER</h1>
+
+  <section id = "register_stuff">
+    <section id="register_info">
+      <h3>E-mail</h3>
+      <input type="text">
       <h3>Name</h3>
       <input type="text">
       <h3>Password</h3>
       <input type="password">
     </section>
-    <button id="login_button">Log in</button>
-
-    <p>Don't have an account?</p><router-link to="/register">Register here</router-link>
+    <button id="register_button">Register</button>
   </section>
+
 </template>
 
 <style>
@@ -24,7 +27,7 @@ body {
   margin: 0;
 }
 
-#login_info {
+#register_info {
   margin-bottom: 20px;
 }
 </style>
