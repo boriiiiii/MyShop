@@ -5,27 +5,30 @@ let balise_data_content = ref(null);
 let apiData = ref([]);
 
 function handleProductClick() {
+  console.log('product')
   getApiData('http://localhost/api/products');
 }
 
 function handleCategoriesClick() {
+  console.log('category')
   getApiData('http://localhost/api/categories');
 }
 
 function handleUsersClick() {
+  console.log('user')
   getApiData('http://localhost/api/users');
 }
 
 function getApiData(apiURL) {
   fetch(apiURL, {
     headers: {
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2OTk5ODExMjgsImV4cCI6MTY5OTk4NDcyOCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImJvcmlzLmRvdWFkeUBlcGl0ZWNoLmRpZ2l0YWwifQ.HylbcA2dHkOpEzBtk8j2DRx4xg5EFi_YS6Jq4Xi4oZBUAiDbA8UPy90FJ2Fieq27_zlPN_kgPrgAwNJGFXcDtDuZNfWo2H9zVvHEEbmwLzzND-EFJLJaxRbfh0hd1Cb4awQJTEM0beoXRT41Yngpwr3gKncaWDBpdztcpndwKfCyn4H-p9uB52S51eXx7D3UnHUWMAIGzQAq9e1ttVyPQfBi0vJN4Q-hPd0We_OTn2qKoQkiZNI1f1NrIFQfcSxT6A3T9kgE3igpGjwnAlLT63ga0V2tjrP70Od6A8wKQ3jr0homgxmXQytNFMGDPJbZJF7J86nopitKsaOiS1OlgQ'
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDAwNjE2NDQsImV4cCI6MTcwMDA2NTI0NCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImJvcmlzLmRvdWFkeUBlcGl0ZWNoLmRpZ2l0YWwifQ.sfwy3ms6Yqyt7I7o_Zn8IHhoL6H-4LY3jMvkU7Sga1alFLMLEOAptnzlaAb2kzFuXIGmfwoHfY2O8poc5mp2uVZrQpSztwqqZAKakLyR7KLcYCnOZB9avMpZ-3luSbuDtBRgZ-YcWkd7IkjhbvbFv42uEn5J7z8D-30wycFvwBFtU0Q46S-ilbj509J94s1iNpO1H5pIwBHZN-4o5WgRZXkHaCsFBDra_-eO9al-DeN8THA80D-t5K-LFTKbyz299rPhrLQ-7f4EkIR-OFA3JihJbEfJ2tmi9hp6V5jyweMdwSp3zKUIR6akfEp2UmWQ1vWQiqRqHGROUrKmMmk-UA'
     }
   })
       .then(response => response.json())
       .then(data => {
         apiData.value = data['hydra:member'];
-        console.log(apiData.value); 
+        console.log(apiData.value);
       })
       .catch(error => console.error('Erreur:', error));
 }
@@ -44,7 +47,7 @@ function getApiData(apiURL) {
       <a href="#" @click="handleUsersClick">Users</a>
     </ul>
     <div id="data_content">
-      <p v-for="item in apiData" :key="item.name">{{ item.name }}</p>
+      <p v-for="item in apiData" :key="item.name">{{ item.id }} {{ item.name }}</p>
     </div>
   </main>
 </template>

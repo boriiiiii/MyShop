@@ -1,4 +1,50 @@
-<script setup>
+<script>
+import router from "@/router";
+
+document.addEventListener('DOMContentLoaded', function() {
+  let input_name = document.getElementById('name');
+  let input_password = document.getElementById('password');
+  const login_button = document.getElementById('login_button');
+
+  login_button.addEventListener('click', function() {
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({"email": input_name.value, "password": input_password.value})
+    };
+      console.log('attends je fetch là')
+    fetch("http://localhost/authentication_token", requestOptions)
+        .then(response => {
+          if (response.status === 200) {
+            console.log("Status Code:", response.status);
+            fetch('http://localhost/api/users', {
+              headers: {
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDAwNjE2NDQsImV4cCI6MTcwMDA2NTI0NCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImJvcmlzLmRvdWFkeUBlcGl0ZWNoLmRpZ2l0YWwifQ.sfwy3ms6Yqyt7I7o_Zn8IHhoL6H-4LY3jMvkU7Sga1alFLMLEOAptnzlaAb2kzFuXIGmfwoHfY2O8poc5mp2uVZrQpSztwqqZAKakLyR7KLcYCnOZB9avMpZ-3luSbuDtBRgZ-YcWkd7IkjhbvbFv42uEn5J7z8D-30wycFvwBFtU0Q46S-ilbj509J94s1iNpO1H5pIwBHZN-4o5WgRZXkHaCsFBDra_-eO9al-DeN8THA80D-t5K-LFTKbyz299rPhrLQ-7f4EkIR-OFA3JihJbEfJ2tmi9hp6V5jyweMdwSp3zKUIR6akfEp2UmWQ1vWQiqRqHGROUrKmMmk-UA'
+              }
+            })
+                .then(response => response.json())
+                .then(data => {
+                  for (let i = 0; i < data['hydra:member'].length;i++){
+                    if (data['hydra:member'][i]['email'] === input_name.value){
+                      console.log(data['hydra:member'][i]['roles'][0])
+                      if(data['hydra:member'][i]['roles'][0]==='ROLE_ ADMIN'){
+                        console.log('MISTER ADMIN')
+                        router.push({ path: '/admin' });
+                      }else{
+                        console.log('DEAR CLIENT')
+                        router.push({ path: '/' });
+                    }
+                    }
+                  }
+                })
+          }
+        })
+
+    console.log(input_name.value);
+    console.log(input_password.value);
+  });
+});
 
 </script>
 
@@ -7,9 +53,9 @@
   <section id = "login_stuff">
     <section id="login_info">
       <h3>Name</h3>
-      <input type="text">
+      <input id = 'name' type="text">
       <h3>Password</h3>
-      <input type="password">
+      <input id = 'password' type="password">
     </section>
     <button id="login_button">Log in</button>
 
