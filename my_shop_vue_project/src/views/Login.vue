@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Status Code:", response.status);
             fetch('http://localhost/api/users', {
               headers: {
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDAwNjE2NDQsImV4cCI6MTcwMDA2NTI0NCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImJvcmlzLmRvdWFkeUBlcGl0ZWNoLmRpZ2l0YWwifQ.sfwy3ms6Yqyt7I7o_Zn8IHhoL6H-4LY3jMvkU7Sga1alFLMLEOAptnzlaAb2kzFuXIGmfwoHfY2O8poc5mp2uVZrQpSztwqqZAKakLyR7KLcYCnOZB9avMpZ-3luSbuDtBRgZ-YcWkd7IkjhbvbFv42uEn5J7z8D-30wycFvwBFtU0Q46S-ilbj509J94s1iNpO1H5pIwBHZN-4o5WgRZXkHaCsFBDra_-eO9al-DeN8THA80D-t5K-LFTKbyz299rPhrLQ-7f4EkIR-OFA3JihJbEfJ2tmi9hp6V5jyweMdwSp3zKUIR6akfEp2UmWQ1vWQiqRqHGROUrKmMmk-UA'
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDAwNjU4NjIsImV4cCI6MTcwMDA2OTQ2Miwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImJvcmlzLmRvdWFkeUBlcGl0ZWNoLmRpZ2l0YWwifQ.Zi1aDhuftUEJakKG-aFyoeRRZHaiIJI_IsXqh0w9uCS4kbiR1a1Md5ESQoer59wC75rBAUo7R0flpMU-sofRMACdzZsUJQSf1klDj6cC4BBrQknYRlXKFHVaxJIEZsgVuy7UKZ3qdq4A9fAiKSJIK1TbLKZMuJnf6JiYOcnd48yJ7BW1eZNjtMER8ADEaRR1UxnRsZp_WBrUCWrdvcw0SX20AywixA-jy7KVJEaukOcVKlRPZv-fTLK3Ku-sku1FqDaQ0xT0qao9y4VebGEtKi425A-dgXYVWN8lth1FvIwuEu83a_mJ_BZv8AKafujUv7DcZ22UmO4bOwvhQPiNzA'
               }
             })
                 .then(response => response.json())
@@ -28,12 +28,14 @@ document.addEventListener('DOMContentLoaded', function() {
                   for (let i = 0; i < data['hydra:member'].length;i++){
                     if (data['hydra:member'][i]['email'] === input_name.value){
                       console.log(data['hydra:member'][i]['roles'][0])
-                      if(data['hydra:member'][i]['roles'][0]==='ROLE_ ADMIN'){
+                      if(data['hydra:member'][i]['roles'][0]==='ROLE_ADMIN'){
                         console.log('MISTER ADMIN')
                         router.push({ path: '/admin' });
+                        break
                       }else{
                         console.log('DEAR CLIENT')
                         router.push({ path: '/' });
+                        break
                     }
                     }
                   }
