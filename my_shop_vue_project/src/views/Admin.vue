@@ -22,7 +22,7 @@ function handleUsersClick() {
 function getApiData(apiURL) {
   fetch(apiURL, {
     headers: {
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDAwNjU4NjIsImV4cCI6MTcwMDA2OTQ2Miwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImJvcmlzLmRvdWFkeUBlcGl0ZWNoLmRpZ2l0YWwifQ.Zi1aDhuftUEJakKG-aFyoeRRZHaiIJI_IsXqh0w9uCS4kbiR1a1Md5ESQoer59wC75rBAUo7R0flpMU-sofRMACdzZsUJQSf1klDj6cC4BBrQknYRlXKFHVaxJIEZsgVuy7UKZ3qdq4A9fAiKSJIK1TbLKZMuJnf6JiYOcnd48yJ7BW1eZNjtMER8ADEaRR1UxnRsZp_WBrUCWrdvcw0SX20AywixA-jy7KVJEaukOcVKlRPZv-fTLK3Ku-sku1FqDaQ0xT0qao9y4VebGEtKi425A-dgXYVWN8lth1FvIwuEu83a_mJ_BZv8AKafujUv7DcZ22UmO4bOwvhQPiNzA'
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDAxMzA0ODQsImV4cCI6MTcwMDEzNDA4NCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6IjEyMzQ1NkAxMjM0NTYifQ.XKTnrBkSKLisESOT-3md8VKf_N_kiFxuJtCsj2O4MOU6kMNOu_tLkOaEwuVvINfXswcIw95jPHxlRq7jLGLZA2tzaP0HHKrfJYTTNbyw6QLgBLyHyaBBTZ9Q9R9Raqnx4VCcdSinYqg71Npo4XagW_siug7P17fod9uuxFA3pgmOkQHskIkMOd-nN7I3Wsq9qJeiihOII6NhHvTc0PeqI-1CeV9_GHyzPwoa0VmaGf_pY5nj4V9dHc0X2QO5Y2sk8sUiCEfpXzaxOJRk3g-hgXxjO7F3UBClOJCj8RKjHzDvMgqdfcdMmKZJrFq35h7vshImZEAAX5ixbP_A5XNSJw'
     }
   })
       .then(response => response.json())
@@ -47,20 +47,45 @@ function getApiData(apiURL) {
       <a href="#" @click="handleUsersClick">Users</a>
     </ul>
     <div id="data_content">
-      <p v-for="elem in apiData" :key="elem.name">
-        <span v-if="elem['@type'] === 'Product'">
-          {{ elem['@id'] }} {{ elem['@type'] }} {{ elem.id }} {{ elem.name }} {{ elem.description }} {{ elem.price }} {{ elem.categories }}
-        </span>
-        <span v-if="elem['@type'] === 'Category'">
-          {{ elem['@id'] }} {{ elem['@type'] }} {{ elem.id }} {{ elem.name }} {{ elem.products }}
-        </span>
-        <span v-if="elem['@type'] === 'User'">
-          {{ elem['@id'] }} {{ elem['@type'] }} {{ elem.id }} {{ elem.email }} {{ elem.fullName }} {{ elem.roles }}
-        </span>
-      </p>
+      <table v-if="apiData.length > 0">
+        <thead>
+        <th>ID</th>
+        <th>Type</th>
+        <th>D_ID</th>
+        <th>Name</th>
+        <th v-if="apiData.length > 0 && apiData[0]['@type'] === 'Product'">Category(ies)</th>
+        <th v-else-if="apiData.length > 0 && apiData[0]['@type'] === 'Category'">Product(s)</th>
+        <th v-else-if="apiData.length > 0 && apiData[0]['@type'] === 'User'">Role</th>
+        <th v-if="apiData.length > 0 && apiData[0]['@type'] === 'Product'">Price</th>
+        <th v-else-if="apiData.length > 0 && apiData[0]['@type'] === 'User'">E-mail</th>
+        <th>Action</th>
+        </thead>
+        <tbody>
+        <tr v-for="elem in apiData" :key="elem['@id']">
+          <td>{{ elem['@id'] }}</td>
+          <td>{{ elem['@type'] }}</td>
+          <td>{{ elem.id }}</td>
+
+          <td v-if="elem['@type'] === 'Product'">{{ elem.name }}</td>
+          <td v-else-if="elem['@type'] === 'Category'">{{ elem.name }}</td>
+          <td v-else-if="elem['@type'] === 'User'">{{ elem.fullName }}</td>
+
+          <td v-if="elem && elem['@type'] === 'Product'">{{ elem.categories }}</td>
+          <td v-else-if="elem && elem['@type'] === 'Category'">{{ elem.products }}</td>
+          <td v-else-if="elem && elem['@type'] === 'User'">{{ elem.roles[0] }}</td>
+
+          <td v-if="elem && elem['@type'] === 'Product'">{{ elem.price }}</td>
+          <td v-else-if="elem && elem['@type'] === 'User'">{{ elem.email }}</td>
+
+          <td>Edit Delete</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
+
   </main>
 </template>
+
 
 <style>
 header {
@@ -77,4 +102,16 @@ ul {
 a {
   cursor: pointer;
 }
+
+td,table {
+
+  border: 2px solid white;
+
+}
+
+#data_content{
+  display: flex;
+  justify-content: center;
+}
+
 </style>
