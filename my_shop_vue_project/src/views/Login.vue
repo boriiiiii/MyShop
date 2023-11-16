@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Status Code:", response.status);
             fetch('http://localhost/api/users', {
               headers: {
-                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDAxMzA0ODQsImV4cCI6MTcwMDEzNDA4NCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6IjEyMzQ1NkAxMjM0NTYifQ.XKTnrBkSKLisESOT-3md8VKf_N_kiFxuJtCsj2O4MOU6kMNOu_tLkOaEwuVvINfXswcIw95jPHxlRq7jLGLZA2tzaP0HHKrfJYTTNbyw6QLgBLyHyaBBTZ9Q9R9Raqnx4VCcdSinYqg71Npo4XagW_siug7P17fod9uuxFA3pgmOkQHskIkMOd-nN7I3Wsq9qJeiihOII6NhHvTc0PeqI-1CeV9_GHyzPwoa0VmaGf_pY5nj4V9dHc0X2QO5Y2sk8sUiCEfpXzaxOJRk3g-hgXxjO7F3UBClOJCj8RKjHzDvMgqdfcdMmKZJrFq35h7vshImZEAAX5ixbP_A5XNSJw'
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDAxNTI0NTEsImV4cCI6MTcwMDE1NjA1MSwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6IjEyMzQ1NkAxMjM0NTYifQ.g9_jK-6Q606Q9IszznntLvZgMxsWgj0qNNvPwVzRdoPilgH90viB8CfSxTNWUG_CZ6Dwn-yt10-Fy-SLgSFusvu4NXNb3gIVGG3v5DxJnNgCb65ytk8H34wf4dvSqFZYj-s3sM4f3lsy5w-gX4tpJAa5RIJuZOk1UTp3gczEg2PxR6up2iSN2uNtSK1sBn_xEoTY6L5AFO1Gh1-b8-KuKy0kSVuICVRZXoUeBcxNslPtueuXhnx33D1zDInrdbjtSD0DE7iq0iaJFCOcEFc53V1c79ZlfIaXyid0bSk_PnlgeoMV1xqHZYgir_bO0vNTVIDiHza6Hd1MllAdbGB9vg'
               }
             })
                 .then(response => response.json())
