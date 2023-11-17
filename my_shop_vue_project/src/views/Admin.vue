@@ -4,11 +4,102 @@
   let balise_data_content = ref(null);
   let apiData = ref([]);
   let editingElement = ref(null);
-  let addElement = ref(null);
-  function handleAddClick(){
-    console.log('CLICKER BOUTTON !')
-  }
+  let addElement = ref([]);
 
+  let newProductName = ref('');
+  let newProductDescription = ref('');
+  let newProductPrice = ref('');
+  let newProductCategory = ref('');
+
+  let newCategoryName = ref('');
+
+  let newUserFullName = ref('');
+  let newUserEmail = ref('');
+  let newUserPassword = ref('');
+
+
+  function handleAddButtonClick(elem){
+
+    if (elem[0]['@type'] === 'Product') {
+      console.log('Product Name:', newProductName.value);
+      console.log('Product Description:', newProductDescription.value);
+      console.log('Product Price:', newProductPrice.value);
+      console.log('Product Category:', newProductCategory.value);
+
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json", 'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDAyNDEyNDAsImV4cCI6MTcwMDI0NDg0MCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6IjEyMzQ1NkAxMjM0NTYifQ.J80oA3NEi47powZpjYu6CuicBHt0d5g1lo_XUxK42HWuVRxn77SVgbKo65w5lIIG15ElBHez1R91RD05Mrc4tpvIgqh2Oc8sa-85_VSxRt4YqJINjSnKYnN686fppmr--N8QD8ZGhLOPEk_2bbioaCUKbJSdzrlZRtwY6KSabywzwVUh9oEoHeNtlzhkkOOOubc2fjmxUTUorF7_7FkR85LrLjaWQYGdhhuQtrapkfMOzchxXMWqAfod0_SW2TdCGVimIXFgD9fjT6Dh2qDWFWhInwGgh1uXdWUFJDV9R_BJRqO_AxIxdU4HsHMyFwYe-SfXA2R9A5BrRIwErVBosg' },
+        body: JSON.stringify({
+          "name": newProductName.value,
+          "description": newProductDescription.value,
+          "price": parseInt(newProductPrice.value),
+          "categories": [
+            newProductCategory.value
+          ]})
+      };
+
+      fetch('http://localhost/api/products', requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+
+    } else if (elem[0]['@type'] === 'Category') {
+      console.log('Category Name:', newCategoryName.value);
+
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json", 'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDAyNDEyNDAsImV4cCI6MTcwMDI0NDg0MCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6IjEyMzQ1NkAxMjM0NTYifQ.J80oA3NEi47powZpjYu6CuicBHt0d5g1lo_XUxK42HWuVRxn77SVgbKo65w5lIIG15ElBHez1R91RD05Mrc4tpvIgqh2Oc8sa-85_VSxRt4YqJINjSnKYnN686fppmr--N8QD8ZGhLOPEk_2bbioaCUKbJSdzrlZRtwY6KSabywzwVUh9oEoHeNtlzhkkOOOubc2fjmxUTUorF7_7FkR85LrLjaWQYGdhhuQtrapkfMOzchxXMWqAfod0_SW2TdCGVimIXFgD9fjT6Dh2qDWFWhInwGgh1uXdWUFJDV9R_BJRqO_AxIxdU4HsHMyFwYe-SfXA2R9A5BrRIwErVBosg'},
+        body: JSON.stringify({
+          "name": newCategoryName.value
+        })
+      };
+
+      fetch('http://localhost/api/categories', requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+
+    } else if (elem[0]['@type'] === 'User') {
+      console.log('User Full Name:', newUserFullName.value);
+      console.log('User Email:', newUserEmail.value);
+      console.log('User Role:', newUserPassword.value);
+
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json", 'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDAyNDEyNDAsImV4cCI6MTcwMDI0NDg0MCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6IjEyMzQ1NkAxMjM0NTYifQ.J80oA3NEi47powZpjYu6CuicBHt0d5g1lo_XUxK42HWuVRxn77SVgbKo65w5lIIG15ElBHez1R91RD05Mrc4tpvIgqh2Oc8sa-85_VSxRt4YqJINjSnKYnN686fppmr--N8QD8ZGhLOPEk_2bbioaCUKbJSdzrlZRtwY6KSabywzwVUh9oEoHeNtlzhkkOOOubc2fjmxUTUorF7_7FkR85LrLjaWQYGdhhuQtrapkfMOzchxXMWqAfod0_SW2TdCGVimIXFgD9fjT6Dh2qDWFWhInwGgh1uXdWUFJDV9R_BJRqO_AxIxdU4HsHMyFwYe-SfXA2R9A5BrRIwErVBosg'},
+        body: JSON.stringify({
+          "email": newUserEmail.value,
+          "password": newUserPassword.value,
+          "fullName": newUserFullName.value})
+      };
+
+      fetch('http://localhost/api/users', requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+
+    }
+
+
+
+    addElement.value = null;
+  }
+  function handleAddClick(data) {
+      addElement.value = data;
+      console.log(addElement.value[0]['@type'])
+  }
   function handleEditClick(elem) {
     console.log('Edit', elem.id);
     editingElement.value = elem;
@@ -50,7 +141,7 @@
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDAyMTE1NTIsImV4cCI6MTcwMDIxNTE1Miwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6IjEyMzQ1NkAxMjM0NTYifQ.rpyRBKxL74bi5HNC7TekOQcR8C_MA6urL2twr43mM_Iqe5KT1XCvr_HNrnAQn49_TAqbqf52PINCuarZE-qi3-IYhtcyDTVyGlTnkGoM54e2mOzZbscw4PysB6bI59SCvSLd4-fwqW5YuDTrGS_k1Fh3by8t6O5XGfDqWucKhQorvKluMiJEfi5ZgA__NgHbRSBggFRKjimTHjv-lUP_iXsLoPW__MGMn-i2cgruWaWR58Urc0jAn8KHz5VHuZuxQNq2-Ms8AbfBc6NgND1g6TgwXsu6hmBrzweqsKaiTFcAcbYzmaYhGg99lCfJnjsz53p0W51CWUIb6LJKobRjtA"},
+          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDAyNDEyNDAsImV4cCI6MTcwMDI0NDg0MCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6IjEyMzQ1NkAxMjM0NTYifQ.J80oA3NEi47powZpjYu6CuicBHt0d5g1lo_XUxK42HWuVRxn77SVgbKo65w5lIIG15ElBHez1R91RD05Mrc4tpvIgqh2Oc8sa-85_VSxRt4YqJINjSnKYnN686fppmr--N8QD8ZGhLOPEk_2bbioaCUKbJSdzrlZRtwY6KSabywzwVUh9oEoHeNtlzhkkOOOubc2fjmxUTUorF7_7FkR85LrLjaWQYGdhhuQtrapkfMOzchxXMWqAfod0_SW2TdCGVimIXFgD9fjT6Dh2qDWFWhInwGgh1uXdWUFJDV9R_BJRqO_AxIxdU4HsHMyFwYe-SfXA2R9A5BrRIwErVBosg"},
         body: JSON.stringify(requestBody)
       };
 
@@ -69,7 +160,7 @@
     console.log('Delete');
     const requestOptions = {
       method: "DELETE",
-      headers: { "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDAyMTE1NTIsImV4cCI6MTcwMDIxNTE1Miwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6IjEyMzQ1NkAxMjM0NTYifQ.rpyRBKxL74bi5HNC7TekOQcR8C_MA6urL2twr43mM_Iqe5KT1XCvr_HNrnAQn49_TAqbqf52PINCuarZE-qi3-IYhtcyDTVyGlTnkGoM54e2mOzZbscw4PysB6bI59SCvSLd4-fwqW5YuDTrGS_k1Fh3by8t6O5XGfDqWucKhQorvKluMiJEfi5ZgA__NgHbRSBggFRKjimTHjv-lUP_iXsLoPW__MGMn-i2cgruWaWR58Urc0jAn8KHz5VHuZuxQNq2-Ms8AbfBc6NgND1g6TgwXsu6hmBrzweqsKaiTFcAcbYzmaYhGg99lCfJnjsz53p0W51CWUIb6LJKobRjtA"}
+      headers: { "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDAyNDEyNDAsImV4cCI6MTcwMDI0NDg0MCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6IjEyMzQ1NkAxMjM0NTYifQ.J80oA3NEi47powZpjYu6CuicBHt0d5g1lo_XUxK42HWuVRxn77SVgbKo65w5lIIG15ElBHez1R91RD05Mrc4tpvIgqh2Oc8sa-85_VSxRt4YqJINjSnKYnN686fppmr--N8QD8ZGhLOPEk_2bbioaCUKbJSdzrlZRtwY6KSabywzwVUh9oEoHeNtlzhkkOOOubc2fjmxUTUorF7_7FkR85LrLjaWQYGdhhuQtrapkfMOzchxXMWqAfod0_SW2TdCGVimIXFgD9fjT6Dh2qDWFWhInwGgh1uXdWUFJDV9R_BJRqO_AxIxdU4HsHMyFwYe-SfXA2R9A5BrRIwErVBosg"}
     };
     if (elem['@type'] === "category"){
       elem['@type'] = "categorie"
@@ -95,7 +186,7 @@
   function getApiData(apiURL) {
     fetch(apiURL, {
       headers: {
-        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDAyMTE1NTIsImV4cCI6MTcwMDIxNTE1Miwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6IjEyMzQ1NkAxMjM0NTYifQ.rpyRBKxL74bi5HNC7TekOQcR8C_MA6urL2twr43mM_Iqe5KT1XCvr_HNrnAQn49_TAqbqf52PINCuarZE-qi3-IYhtcyDTVyGlTnkGoM54e2mOzZbscw4PysB6bI59SCvSLd4-fwqW5YuDTrGS_k1Fh3by8t6O5XGfDqWucKhQorvKluMiJEfi5ZgA__NgHbRSBggFRKjimTHjv-lUP_iXsLoPW__MGMn-i2cgruWaWR58Urc0jAn8KHz5VHuZuxQNq2-Ms8AbfBc6NgND1g6TgwXsu6hmBrzweqsKaiTFcAcbYzmaYhGg99lCfJnjsz53p0W51CWUIb6LJKobRjtA'
+        'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDAyNDEyNDAsImV4cCI6MTcwMDI0NDg0MCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6IjEyMzQ1NkAxMjM0NTYifQ.J80oA3NEi47powZpjYu6CuicBHt0d5g1lo_XUxK42HWuVRxn77SVgbKo65w5lIIG15ElBHez1R91RD05Mrc4tpvIgqh2Oc8sa-85_VSxRt4YqJINjSnKYnN686fppmr--N8QD8ZGhLOPEk_2bbioaCUKbJSdzrlZRtwY6KSabywzwVUh9oEoHeNtlzhkkOOOubc2fjmxUTUorF7_7FkR85LrLjaWQYGdhhuQtrapkfMOzchxXMWqAfod0_SW2TdCGVimIXFgD9fjT6Dh2qDWFWhInwGgh1uXdWUFJDV9R_BJRqO_AxIxdU4HsHMyFwYe-SfXA2R9A5BrRIwErVBosg'
       }
     })
         .then(response => response.json())
@@ -121,18 +212,21 @@
       </ul>
 
       <div id="data_content">
-        <button id="add_button" v-if="apiData.length > 0" @click="handleAddClick">Add</button>
+        <button id="add_button" v-if="apiData.length > 0" @click="handleAddClick(apiData)">Add</button>
         <table v-if="apiData.length > 0">
           <thead>
             <th>ID</th>
             <th>Type</th>
             <th>D_ID</th>
             <th>Name</th>
+
             <th v-if="apiData.length > 0 && apiData[0]['@type'] === 'Product'">Category(ies)</th>
             <th v-else-if="apiData.length > 0 && apiData[0]['@type'] === 'Category'">Product(s)</th>
             <th v-else-if="apiData.length > 0 && apiData[0]['@type'] === 'User'">Role</th>
+
             <th v-if="apiData.length > 0 && apiData[0]['@type'] === 'Product'">Price</th>
             <th v-else-if="apiData.length > 0 && apiData[0]['@type'] === 'User'">E-mail</th>
+
             <th>Action</th>
           </thead>
           <tbody>
@@ -159,24 +253,51 @@
           </tr>
           </tbody>
         </table>
+        <div v-if="editingElement">
+          <div id="edit_&_add_content">
+
+            <input v-if="editingElement['@type'] === 'Product' || editingElement['@type'] === 'Category'" v-model="editingElement['@id']" />
+            <input v-if="editingElement['@type'] === 'Product' || editingElement['@type'] === 'Category'" v-model="editingElement['@type']" />
+            <input v-if="editingElement['@type'] === 'Product' || editingElement['@type'] === 'Category'" v-model="editingElement.id" />
+
+            <input v-if="editingElement['@type'] === 'Product' || editingElement['@type'] === 'Category'" v-model="editingElement.name" />
+            <input v-if="editingElement['@type'] === 'User'" v-model="editingElement.fullName" />
+
+            <input v-if="editingElement['@type'] === 'Category'" v-model="editingElement.products" />
+            <input v-if="editingElement['@type'] === 'Product'" v-model="editingElement.categories" />
+
+            <input v-if="editingElement['@type'] === 'User'" v-model="editingElement.email" />
+            <input v-if="editingElement['@type'] === 'Product'" v-model="editingElement.price" />
+
+            <button @click="handleSaveClick()">Save</button>
+          </div>
       </div>
-      <div v-if="editingElement">
-        <div id="edit_&_add_content">
+        <div v-if="addElement && addElement.length > 0">
+          <div id="add_content">
+            <div class="add_content" v-if="addElement[0]['@type'] === 'Product'">
 
-          <input v-if="editingElement['@type'] === 'Product' || editingElement['@type'] === 'Category'" v-model="editingElement['@id']" />
-          <input v-if="editingElement['@type'] === 'Product' || editingElement['@type'] === 'Category'" v-model="editingElement['@type']" />
-          <input v-if="editingElement['@type'] === 'Product' || editingElement['@type'] === 'Category'" v-model="editingElement.id" />
+              <input id="add_input_product_name" v-model="newProductName" placeholder="Name">
+              <input id="add_input_product_description" v-model="newProductDescription" placeholder="Description">
+              <input id="add_input_product_price" v-model="newProductPrice" placeholder="Price">
+              <input id="add_input_product_category" v-model="newProductCategory" placeholder="Categories">
 
-          <input v-if="editingElement['@type'] === 'Product' || editingElement['@type'] === 'Category'" v-model="editingElement.name" />
-          <input v-if="editingElement['@type'] === 'User'" v-model="editingElement.fullName" />
+              <button @click="handleAddButtonClick(addElement)" >ADD NEW</button>
+            </div>
+            <div class="add_content" v-if="addElement[0]['@type'] === 'Category'">
 
-          <input v-if="editingElement['@type'] === 'Category'" v-model="editingElement.products" />
-          <input v-if="editingElement['@type'] === 'Product'" v-model="editingElement.categories" />
+              <input id="add_input_category_name" v-model="newCategoryName" placeholder="Name">
 
-          <input v-if="editingElement['@type'] === 'User'" v-model="editingElement.email" />
-          <input v-if="editingElement['@type'] === 'Product'" v-model="editingElement.price" />
+              <button @click="handleAddButtonClick(addElement)" >ADD NEW</button>
+            </div>
+            <div class="add_content" v-if="addElement[0]['@type'] === 'User'">
 
-          <button @click="handleSaveClick()">Save</button>
+              <input id="add_input_user_fullname" v-model="newUserFullName" placeholder="Full Name">
+              <input id="add_input_user_email" v-model="newUserEmail" placeholder="Email">
+              <input id="add_input_user_role" v-model="newUserPassword" placeholder="Password">
+
+              <button @click="handleAddButtonClick(addElement)" >ADD NEW</button>
+            </div>
+          </div>
         </div>
       </div>
     </main>
@@ -220,8 +341,5 @@
     margin-bottom: 2%;
   }
 
-  #edit_&_add_content{
-    background-color: whitesmoke;
-    color: red;
-  }
+
   </style>

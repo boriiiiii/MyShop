@@ -12,7 +12,7 @@ function redirectToLogin() {
 function getApiData(apiURL){
   fetch(apiURL, {
     headers: {
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDAyMTcwNTAsImV4cCI6MTcwMDIyMDY1MCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6IjEyMzQ1NkAxMjM0NTYifQ.TjC9VAk8xlMx97iHeJF7dKxFiBz_Vt8ptbtNQipP3uIpW76eh2T4FXaLgaNg39pTj_BIam4k-r4S6Nbagl6JhBsnMAh9ivGH_BpSaRKLs0vXy_EYTbBIJB5-9lwX2CwfIrMhohTJ1ZXkmlpJ7ZXX6H3v2wpE9H1KXuZ7DFTDnHVYZXjd9ZDB3WPdw34h7egGwMHqgo2apiXRqZeO4zKIrke_fjdpz_7fLdkh9ZXYwznwv84okh4Ve6ZT6NwWPVJc39f8UOV1g3XDZ4IP0O9kIFZC5s7PpixptIAzXkrvFOnYQBtSBwqUEf1iJABP-FaBdL3eeQ3qPpat-9y1GDXefA'
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDAyMjY5OTQsImV4cCI6MTcwMDIzMDU5NCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6IjEyMzQ1NkAxMjM0NTYifQ.tWkKfsSz3V7VxWWoLrnXxsuBGXnXqT7-dCv7SGoBL2qD07q-tnR1Dj0hZsg1k6_aeFzaRZO06hQYXXH9rVfcgZjxUUnu_VpSJDBObgc1T4XpMwMNlQWvdTHUkseyiikNw5pov9FliFttAte0jjgwFlGzS5Tgi3NQUy0VjS1hdZ4risamPSbi8l58h1qGmETZbscAyqb4biJV8L53VcZrYs0zjVq1tqiZsdPPWwf99KRb9FcRgtl4gnvIZJp5VlrjY7Fku9GzXKTXgH7GuMfop_4sgajvePNF9YQ3hBIGYGrjlE8JRHzARxDA4FM_-jHcntQVFHd5lyG-Q6A8WHmsSA'
     }
   })
       .then(response => response.json())
@@ -26,6 +26,7 @@ function getApiData(apiURL){
       });
 }
 getApiData('http://localhost/api/products')
+
 </script>
 
 <template>
@@ -36,17 +37,17 @@ getApiData('http://localhost/api/products')
   </header>
 
   <main>
-    <div class="product" v-if="apiData" v-for="product in apiData['hydra:member']" :key="product['@id']" >
-      <div class="none-image"></div>
+      <div  class = "product" v-if="apiData" v-for="product in apiData['hydra:member']" :key="product['@id']" >
 
-      <div class="info-product">
-        <div class="name-product">{{ product['name'] }} </div>
-        <div class="category-product">{{ product['categories'] }}</div>
-        <div class="price-product">{{ product['price'] }} €</div>
-        <div class="id-product">{{ product['id'] }}</div>
+        <div class="none-image"></div>
+
+        <div class="info-product">
+          <div class="name-product">{{ product['name'] }} </div>
+          <div class="price-product">{{ product['price'] }} €</div>
+          <div class="id-product">{{ product['id'] }}</div>
+        </div>
+
       </div>
-    </div>
-    <div v-else>Loading</div>
   </main>
 </template>
 
