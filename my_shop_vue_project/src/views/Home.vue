@@ -1,32 +1,18 @@
-<template>
-  <header>
-    <img alt="Vue logo" class="logo" src="../assets/logo.svg" width="125" height="125" />
-    <input type="text" size="70">
-    <button @click="redirectToLogin">Login</button>
-  </header>
-
-  <main>
-    <h2>Données de l'API :</h2>
-    <div v-if="apiData && apiData['hydra:member']">
-      <div v-for="category in apiData['hydra:member']" :key="category['@id']">
-        <h3>Category {{ category['id'] }}</h3>
-        <p>ID: {{ category['id'] }}</p>
-        <p>Type: {{ category['@type'] }}</p>
-        <p>Name: {{ category['name'] }}</p>
-        <p>Product's List: {{ category['products'] }}</p>
-      </div>
-    </div>
-  </main>
-</template>
-
 <script setup>
+import router from "@/router";
+import {computed} from "vue";
+
 let apiData = null;
 let loading = true;
+
+function redirectToLogin() {
+  router.push({path : '/login'})
+}
 
 function getApiData(apiURL){
   fetch(apiURL, {
     headers: {
-      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2OTk5NzIyMjMsImV4cCI6MTY5OTk3NTgyMywicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6ImJvcmlzLmRvdWFkeUBlcGl0ZWNoLmRpZ2l0YWwifQ.1AgtOtGZOX5EewUzu74wHX5b4f_0Nrkzx_1aE_w31A61-qp8hzLVAxm75FKPOxZHLoNyZ1QSmRssfhHFPCtaWpMJcCAjYz2xm_7ELb0qPib1G0fz4uTyr2eFmMoAYvNvIF3m1zYi2mH2zCt46lgKpwflmxD691lx0xZoMoyO0zf8QjIJ9hbmoCWHaHxFBncwv3B56LsX4538XM9ZCl6LJhuze3lshog6-JTgvI3OPUlUFo11FsUMjuBFy8QRzvMwN3RK_2IO2OHCtcT8Xm36lE-IVoU-bHUpI-_N0wfvXOHeJjteLrTJ6_noxmSC8ZIYep0eW7vQW26l95FRjIjHkA'
+      'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDAyMTcwNTAsImV4cCI6MTcwMDIyMDY1MCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6IjEyMzQ1NkAxMjM0NTYifQ.TjC9VAk8xlMx97iHeJF7dKxFiBz_Vt8ptbtNQipP3uIpW76eh2T4FXaLgaNg39pTj_BIam4k-r4S6Nbagl6JhBsnMAh9ivGH_BpSaRKLs0vXy_EYTbBIJB5-9lwX2CwfIrMhohTJ1ZXkmlpJ7ZXX6H3v2wpE9H1KXuZ7DFTDnHVYZXjd9ZDB3WPdw34h7egGwMHqgo2apiXRqZeO4zKIrke_fjdpz_7fLdkh9ZXYwznwv84okh4Ve6ZT6NwWPVJc39f8UOV1g3XDZ4IP0O9kIFZC5s7PpixptIAzXkrvFOnYQBtSBwqUEf1iJABP-FaBdL3eeQ3qPpat-9y1GDXefA'
     }
   })
       .then(response => response.json())
@@ -39,12 +25,30 @@ function getApiData(apiURL){
         loading = false;
       });
 }
-function redirectToLogin() {
-  // Assuming you want to redirect to http://localhost:5173/login
-  window.location.href = 'http://localhost:5173/login';
-}
-
+getApiData('http://localhost/api/products')
 </script>
+
+<template>
+  <header>
+    <img alt="Vue logo" class="logo" src="../assets/logo.svg" width="125" height="125" />
+    <input type="text" size="70">
+    <button @click="redirectToLogin">Login</button>
+  </header>
+
+  <main>
+    <div class="product" v-if="apiData" v-for="product in apiData['hydra:member']" :key="product['@id']" >
+      <div class="none-image"></div>
+
+      <div class="info-product">
+        <div class="name-product">{{ product['name'] }} </div>
+        <div class="category-product">{{ product['categories'] }}</div>
+        <div class="price-product">{{ product['price'] }} €</div>
+        <div class="id-product">{{ product['id'] }}</div>
+      </div>
+    </div>
+    <div v-else>Loading</div>
+  </main>
+</template>
 
 <style>
 header{
@@ -52,4 +56,45 @@ header{
   justify-content: space-between;
   align-items: center;
 }
+
+main{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.product{
+  background-color: white;
+  height: 185px;
+  width: 155px;
+  padding: 5px;
+  border-radius: 5%;
+}
+
+
+.none-image{
+  background-color: grey;
+  width: 100%;
+  height: 50%;
+  border-radius: 5%;
+}
+
+
+.name-product{
+  font-weight: bold;
+  color: #0a0a0a;
+}
+
+.category-product{
+  color: #0a0a0a;
+}
+
+.price-product{
+  color: #0a0a0a;
+  font-size: 0.8em;
+}
+.id-product{
+  color: #0a0a0a;
+  font-size: 0.8em;
+}
+
 </style>
