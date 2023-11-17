@@ -27,3 +27,15 @@ npm run dev
 ```sh
 npm run build
 ```
+
+If you need the token follow those steps :
+
+go to the API's Docs :
+
+http://localhost/api/docs
+
+Go to The token part 
+
+then put your admin login, 
+
+then execute and you have your token.
